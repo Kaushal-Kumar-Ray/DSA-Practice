@@ -1,32 +1,42 @@
-def isCycle(V, edges):
-    from collections import defaultdict
+from collections import defaultdict
 
-    graph = defaultdict(list)
-    for u, v in edges:
-        graph[u].append(v)
-        graph[v].append(u)
+class Solution:
+    def isCycle(self, V, edges):
+        graph = defaultdict(list)
+        for u, v in edges:
+            graph[u].append(v)
+            graph[v].append(u)
 
-    visited = set()
+        visited = [False] * V
 
-    def dfs(node, parent):
-        visited.add(node)
-        for neighbor in graph[node]:
-            if neighbor not in visited:
-                if dfs(neighbor, node):
+        def dfs(node, parent):
+            visited[node] = True
+            for neighbor in graph[node]:
+                if not visited[neighbor]:
+                    if dfs(neighbor, node):
+                        return True
+                elif neighbor != parent:
                     return True
-            elif neighbor != parent:
-                return True
+            return False
+
+        for i in range(V):
+            if not visited[i]:
+                if dfs(i, -1):
+                    return True
         return False
 
-    for i in range(V):
-        if i not in visited:
-            if dfs(i, -1):
-                return True
-    return False
 
-# 💻 Input
-V = 4
-edges = [[0, 1], [0, 2], [1, 2], [2, 3]]
+# 🔽 User Input Section
+V = int(input("Enter number of vertices: "))
+E = int(input("Enter number of edges: "))
 
-# 🚀 Output
-print("Cycle found!" if isCycle(V, edges) else "No cycle.")
+edges = []
+print("Enter the edges (u v) one per line:")
+for _ in range(E):
+    u, v = map(int, input().split())
+    edges.append([u, v])
+
+# 🚀 Check for cycle
+sol = Solution()
+has_cycle = sol.isCycle(V, edges)
+print("Cycle detected!" if has_cycle else "No cycle in the graph.")
