@@ -20,7 +20,7 @@ class solution:
                 j+=1
             else:
                 k+=1 
-        return return if result else[-1]
+        return result if result else[-1]
 
 arr1=list(map(int,input().split()))            
 arr2=list(map(int,input().split()))            
