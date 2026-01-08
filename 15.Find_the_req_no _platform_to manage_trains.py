@@ -1,7 +1,7 @@
 class Solution:
     def minimumPlatform(self, arr, dep):
         arr.sort()
-        dep.sort()
+        dep.sort() #
 
         n = len(arr)
         i = 1
